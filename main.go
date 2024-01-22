@@ -31,9 +31,7 @@ func main() {
 	{
 		metrics.Routes(v1)
 
-		r.GET("/ping", func(c *gin.Context) {
-			c.JSON(http.StatusOK, "eae pogao")
-		})
+		r.GET("/ping", func(c *gin.Context) { c.JSON(http.StatusOK, "eae pogao") })
 	}
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
