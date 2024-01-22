@@ -6,5 +6,6 @@ func Routes(r *gin.RouterGroup) {
 	m := r.Group("/metrics")
 	{
 		m.GET("/", Index)
+		m.POST("/", Create)
 	}
 }

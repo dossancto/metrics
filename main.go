@@ -1,9 +1,7 @@
 package main
 
-import (
-	"github.com/lu-css/metrics/src/application/features"
-)
+import "github.com/lu-css/metrics/src/application/ui"
 
 func main() {
-	features.Routes()
+	ui.Routes()
 }

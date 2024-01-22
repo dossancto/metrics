@@ -1,4 +1,4 @@
-package features
+package ui
 
 import (
 	"net/http"
@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/lu-css/metrics/docs"
 	"github.com/lu-css/metrics/src/application/features/metrics"
+	"github.com/lu-css/metrics/src/application/middlewares"
 	"github.com/mvrilo/go-redoc"
 	ginredoc "github.com/mvrilo/go-redoc/gin"
 	swaggerfiles "github.com/swaggo/files"
@@ -22,6 +23,7 @@ var doc = redoc.Redoc{
 
 func Routes() {
 	r := gin.Default()
+	r.Use(middlewares.ErrorHandler)
 
 	docs.SwaggerInfo.BasePath = "/api/v1"
 
@@ -40,7 +42,7 @@ func Routes() {
 func openAPIConfig(r *gin.Engine) {
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
-	redocConfig(r)
+	// redocConfig(r)
 }
 
 func redocConfig(r *gin.Engine) {
