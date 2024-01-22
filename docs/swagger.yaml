@@ -1,7 +1,7 @@
 info:
   contact: {}
 paths:
-  /example/helloworld:
+  /metrics:
     get:
       consumes:
       - application/json

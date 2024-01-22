@@ -18,16 +18,14 @@ func main() {
 	docs.SwaggerInfo.BasePath = "/api/v1"
 	v1 := r.Group("/api/v1")
 	{
-		eg := v1.Group("/example")
-		{
-			eg.GET("/helloworld", metrics.Index)
-		}
-	}
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+		metrics.Routes(v1)
 
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, "eae pogao")
-	})
+		r.GET("/ping", func(c *gin.Context) {
+			c.JSON(http.StatusOK, "eae pogao")
+		})
+	}
+
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
 	r.Run()
 }
