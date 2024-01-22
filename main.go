@@ -10,12 +10,14 @@ import (
 	docs "github.com/lu-css/metrics/docs"
 
 	metrics "github.com/lu-css/metrics/src/ui/controllers/metrics"
+	ginredoc "github.com/mvrilo/go-redoc/gin"
 )
 
 func main() {
 	r := gin.Default()
 
 	docs.SwaggerInfo.BasePath = "/api/v1"
+
 	v1 := r.Group("/api/v1")
 	{
 		metrics.Routes(v1)
@@ -27,5 +29,6 @@ func main() {
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
+	r.Use(ginredoc.New(docs.Doc))
 	r.Run()
 }

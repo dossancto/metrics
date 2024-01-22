@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @BasePath /api/v1/metrics
+// @BasePath /api/v1
 
 // PingExample godoc
 // @Summary ping example
