@@ -5,13 +5,22 @@ import (
 
 	"github.com/gin-gonic/gin"
 	swaggerfiles "github.com/swaggo/files"
-	"github.com/swaggo/gin-swagger"
+	ginSwagger "github.com/swaggo/gin-swagger"
 
 	docs "github.com/lu-css/metrics/docs"
 
 	metrics "github.com/lu-css/metrics/src/ui/controllers/metrics"
+	"github.com/mvrilo/go-redoc"
 	ginredoc "github.com/mvrilo/go-redoc/gin"
 )
+
+var doc = redoc.Redoc{
+	Title:       "Example API",
+	Description: "Example API Description",
+	SpecFile:    "./docs/swagger.json", // "./openapi.yaml"
+	SpecPath:    "./swagger/doc.json",  // "/openapi.yaml"
+	DocsPath:    "/docs",
+}
 
 func main() {
 	r := gin.Default()
@@ -29,6 +38,6 @@ func main() {
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
-	r.Use(ginredoc.New(docs.Doc))
+	r.Use(ginredoc.New(doc))
 	r.Run()
 }

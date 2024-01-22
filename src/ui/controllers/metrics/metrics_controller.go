@@ -9,10 +9,10 @@ import (
 // @BasePath /api/v1
 
 // PingExample godoc
-// @Summary ping example
+// @Summary List Metrics
 // @Schemes
-// @Description do ping
-// @Tags example
+// @Description List all users
+// @Tags Metrics
 // @Accept json
 // @Produce json
 // @Success 200 {string} Helloworld
