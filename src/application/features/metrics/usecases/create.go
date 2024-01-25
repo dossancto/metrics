@@ -1,14 +1,14 @@
 package usecases
 
 import (
-	"github.com/lu-css/metrics/src/application/features/metrics/entities"
+	. "github.com/lu-css/metrics/src/application/features/metrics/entities"
 	repository "github.com/lu-css/metrics/src/infra/database/features/metrics"
 )
 
-func Create(name string) (entities.Metric, error) {
+func Create(name string) (Metric, error) {
 	repo := repository.NewMetricRepository()
 
-	metric := entities.Metric{
+	metric := Metric{
 		Name: name,
 	}
 
