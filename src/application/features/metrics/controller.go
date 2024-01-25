@@ -4,6 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+
+	. "github.com/lu-css/metrics/src/application/features/metrics/entities"
 	"github.com/lu-css/metrics/src/application/features/metrics/usecases"
 )
 
@@ -32,13 +34,15 @@ func Index(c *gin.Context) {
 // @BasePath /api/v1
 
 // Create
+
 // @Summary Create Metric
 // @Schemes
 // @Description Creates a new Metric
 // @Tags Metrics
 // @Accept json
 // @Produce json
-// @Success 200 {Metric} Metric
+// @Success 200 {object} Metric
+// @Example Metric {"id": "metric1", "name": "Metric One"}
 // @Router /metrics [POST]
 func Create(c *gin.Context) {
 	result, err := usecases.Create("salve")
@@ -48,5 +52,7 @@ func Create(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, result)
+	var a Metric = result
+
+	c.JSON(http.StatusOK, a)
 }

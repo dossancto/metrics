@@ -15,9 +15,10 @@ func ErrorHandler(c *gin.Context) {
 
 		case *exceptions.ErrNotFound:
 			c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
-		}
 
+		default:
+			c.JSON(http.StatusInternalServerError, "")
+		}
 	}
 
-	c.JSON(http.StatusInternalServerError, "")
 }
