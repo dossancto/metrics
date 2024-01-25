@@ -12,7 +12,7 @@ func Create(name string) (entities.Metric, error) {
 		Name: name,
 	}
 
-	err := repo.Save(metric)
+	m, err := repo.Save(metric)
 
-	return metric, err
+	return m, err
 }

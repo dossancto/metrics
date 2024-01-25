@@ -35,8 +35,15 @@ func (repo *GormMetricRepository) FindById(id uint) (*entities.Metric, error) {
 	return &metric, nil
 }
 
-func (repo *GormMetricRepository) Save(metric entities.Metric) error {
-	return repo.db.Save(&metric).Error
+func (repo *GormMetricRepository) Save(metric entities.Metric) (entities.Metric, error) {
+
+	if id, err := gonanoid.Nanoid(); err != nil {
+		return entities.Metric{}, err
+	} else {
+		metric.Id = id
+	}
+
+	return metric, repo.db.Save(&metric).Error
 }
 
 func (repo *GormMetricRepository) Delete(id uint) error {
