@@ -10,6 +10,9 @@ compose/down:
 compose/restart:
 	docker-compose restart
 
+app/setup:
+	go install github.com/swaggo/swag/cmd/swag@latest
+
 run:
 	swag init
 	go run .

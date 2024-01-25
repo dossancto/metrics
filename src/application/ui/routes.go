@@ -8,34 +8,28 @@ import (
 	"github.com/lu-css/metrics/src/application/features/metrics"
 	"github.com/lu-css/metrics/src/application/middlewares"
 	"github.com/lu-css/metrics/src/config"
-	"github.com/mvrilo/go-redoc"
+
+	// "github.com/lu-css/metrics/src/config"
 	ginredoc "github.com/mvrilo/go-redoc/gin"
-	"github.com/newrelic/go-agent/v3/integrations/nrgin"
+
+	// "github.com/newrelic/go-agent/v3/integrations/nrgin"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-var doc = redoc.Redoc{
-	Title:       "Example API",
-	Description: "Example API Description",
-	SpecFile:    "./docs/swagger.json", // "./openapi.yaml"
-	SpecPath:    "./swagger/doc.json",  // "/openapi.yaml"
-	DocsPath:    "/docs",
-}
-
 func Routes() {
 	r := gin.Default()
-  useThirdParties(r)
+	useThirdParties(r)
 
-	docs.SwaggerInfo.BasePath = "/api/v1"
+	docs.SwaggerInfo = config.GetSwaggerConfig(*docs.SwaggerInfo)
 
 	openAPIConfig(r)
 	r.Use(middlewares.ErrorHandler)
 
-	v1 := r.Group("/api/v1")
-	{
-		metrics.Routes(v1)
+	metrics.Routes(&r.RouterGroup)
 
+	r.Group("/api/v1")
+	{
 		r.GET("/ping", func(c *gin.Context) { c.JSON(http.StatusOK, "pong") })
 	}
 
@@ -49,9 +43,9 @@ func openAPIConfig(r *gin.Engine) {
 }
 
 func redocConfig(r *gin.Engine) {
-	r.Use(ginredoc.New(doc))
+	r.Use(ginredoc.New(config.GetRedocConfig()))
 }
 
 func useThirdParties(r *gin.Engine) {
-	r.Use(nrgin.Middleware(config.GetNewRelic()))
+	// r.Use(nrgin.Middleware(config.GetNewRelic()))
 }
