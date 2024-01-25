@@ -19,7 +19,14 @@ import (
 // @Success 200 {string} Helloworld
 // @Router /metrics [get]
 func Index(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{"users": "hello world"})
+	result, err := usecases.GetAll()
+
+	if err != nil {
+		c.Error(err)
+		return
+	}
+
+	c.JSON(http.StatusOK, result)
 }
 
 // @BasePath /api/v1
