@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/lu-css/metrics/docs"
 	"github.com/lu-css/metrics/src/application/features/metrics"
-	"github.com/lu-css/metrics/src/application/middlewares"
+	// "github.com/lu-css/metrics/src/application/middlewares"
 	"github.com/mvrilo/go-redoc"
 	ginredoc "github.com/mvrilo/go-redoc/gin"
 	swaggerfiles "github.com/swaggo/files"
@@ -23,9 +23,11 @@ var doc = redoc.Redoc{
 
 func Routes() {
 	r := gin.Default()
-	r.Use(middlewares.ErrorHandler)
 
 	docs.SwaggerInfo.BasePath = "/api/v1"
+
+	openAPIConfig(r)
+	// r.Use(middlewares.ErrorHandler)
 
 	v1 := r.Group("/api/v1")
 	{
@@ -33,8 +35,6 @@ func Routes() {
 
 		r.GET("/ping", func(c *gin.Context) { c.JSON(http.StatusOK, "pong") })
 	}
-
-	openAPIConfig(r)
 
 	r.Run()
 }

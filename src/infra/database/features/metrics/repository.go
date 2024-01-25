@@ -2,6 +2,7 @@ package metrics
 
 import (
 	"github.com/lu-css/metrics/src/application/features/metrics/entities"
+	"github.com/lu-css/metrics/src/config"
 	gonanoid "github.com/matoous/go-nanoid"
 	"gorm.io/gorm"
 )
@@ -10,18 +11,23 @@ type GormMetricRepository struct {
 	db *gorm.DB
 }
 
-func NewMetricRepository(db *gorm.DB) *GormMetricRepository { return &GormMetricRepository{db}
+func NewMetricRepository() *GormMetricRepository {
+	db := config.GetDatabase()
+
+	return &GormMetricRepository{db}
 }
 
-func (repo *MetricRepository) FindAll() ([]entities.Metric, error) {
-var metrics []entities.Metric
+func (repo *GormMetricRepository) FindAll() ([]entities.Metric, error) {
+	var metrics []entities.Metric
+
 	if err := repo.db.Find(&metrics).Error; err != nil {
 		return nil, err
 	}
+
 	return metrics, nil
 }
 
-func (repo *MetricRepository) FindById(id uint) (*entities.Metric, error) {
+func (repo *GormMetricRepository) FindById(id uint) (*entities.Metric, error) {
 	var metric entities.Metric
 	if err := repo.db.First(&metric, id).Error; err != nil {
 		return nil, err
@@ -29,11 +35,11 @@ func (repo *MetricRepository) FindById(id uint) (*entities.Metric, error) {
 	return &metric, nil
 }
 
-func (repo *MetricRepository) Save(metric entities.Metric) error {
+func (repo *GormMetricRepository) Save(metric entities.Metric) error {
 	return repo.db.Save(&metric).Error
 }
 
-func (repo *MetricRepository) Delete(id uint) error {
+func (repo *GormMetricRepository) Delete(id uint) error {
 	return repo.db.Delete(&entities.Metric{}, id).Error
 }
 

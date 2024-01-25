@@ -2,13 +2,17 @@ package usecases
 
 import (
 	"github.com/lu-css/metrics/src/application/features/metrics/entities"
-	repo "github.com/lu-css/metrics/src/infra/database/features/metrics"
+	repository "github.com/lu-css/metrics/src/infra/database/features/metrics"
 )
 
 func Create(name string) (entities.Metric, error) {
+	repo := repository.NewMetricRepository()
+
 	metric := entities.Metric{
 		Name: name,
 	}
 
-	return repo.Save(metric)
+	err := repo.Save(metric)
+
+	return metric, err
 }
